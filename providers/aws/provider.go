@@ -103,6 +103,7 @@ func (p *Provider) DeployAgent(ctx context.Context, agent *woodpecker.Agent) err
 			HttpEndpoint:            types.InstanceMetadataEndpointStateEnabled,
 			HttpPutResponseHopLimit: aws.Int32(1),
 			HttpTokens:              types.HttpTokensStateRequired,
+			InstanceMetadataTags:    types.InstanceMetadataTagsStateEnabled,
 		},
 		SecurityGroupIds: p.securityGroups,
 		MinCount:         aws.Int32(1),
