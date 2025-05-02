@@ -100,9 +100,10 @@ func (p *Provider) DeployAgent(ctx context.Context, agent *woodpecker.Agent) err
 		ImageId:      aws.String(p.amiID),
 		InstanceType: types.InstanceType(p.instanceType),
 		MetadataOptions: &types.InstanceMetadataOptionsRequest{
-			HttpEndpoint:            types.InstanceMetadataEndpointStateEnabled,
+			HttpEndpoint:            aws.String("enabled"),
 			HttpPutResponseHopLimit: aws.Int32(1),
-			HttpTokens:              types.HttpTokensStateRequired,
+			HttpTokens:              aws.String("required"),
+			InstanceMetadataTags:    aws.String("enabled"),
 		},
 		SecurityGroupIds: p.securityGroups,
 		MinCount:         aws.Int32(1),
