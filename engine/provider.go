@@ -5,7 +5,7 @@ import (
 	"context"
 	"fmt"
 	"text/template"
-
+        "github.com/rs/zerolog/log"
 	"go.woodpecker-ci.org/autoscaler/config"
 	"go.woodpecker-ci.org/woodpecker/v3/woodpecker-go/woodpecker"
 )
@@ -20,7 +20,7 @@ type Provider interface {
 // using the provided configuration.
 func RenderUserDataTemplate(config *config.Config, agent *woodpecker.Agent, tmpl *template.Template) (string, error) {
 	var err error
-
+	log.Info().Str("config.UserData", config.UserData).Msg("<<<< USER DATA >>>>")
 	switch {
 	case tmpl != nil:
 	case config.UserData != "":
@@ -46,7 +46,7 @@ func RenderUserDataTemplate(config *config.Config, agent *woodpecker.Agent, tmpl
 	}
 
 	if config.GRPCSecure {
-		params.Environment["WOODPECKER_GRPC_SECURE"] = "true"
+		params.Environment["WOODPECKER_GRPC_SECURE"] = "false"
 	}
 
 	for key, value := range config.Environment {

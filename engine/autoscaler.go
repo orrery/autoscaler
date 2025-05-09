@@ -326,13 +326,12 @@ func (a *Autoscaler) calcAgents(ctx context.Context) (float64, error) {
 	maxUp := float64(a.config.MaxAgents - availablePoolAgents)
 	maxDown := float64(availablePoolAgents - a.config.MinAgents)
 
-	//reqPoolAgents := math.Ceil(reqAgents - (availableAgents + float64(availablePoolAgents)))
-	reqPoolAgents := math.Ceil(reqAgents - availableAgents)
+	reqPoolAgents := math.Ceil(reqAgents - (availableAgents + float64(availablePoolAgents)))
 	reqPoolAgents = math.Max(reqPoolAgents, -maxDown)
 	reqPoolAgents = math.Min(reqPoolAgents, maxUp)
 
 	log.Debug().Msgf("capacity info: agents = %v/%v pool = %v/%v limits = %v/%v", availableAgents, reqAgents, availablePoolAgents, reqPoolAgents, maxUp, maxDown)
-	log.Debug().Msgf("reqAgents=%v availableAgents=%v availablePoolAgents=%v", reqAgents, availableAgents, availablePoolAgents)
+
 	return reqPoolAgents, nil
 }
 
